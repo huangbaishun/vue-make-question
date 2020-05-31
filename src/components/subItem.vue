@@ -13,19 +13,21 @@
     <div v-if="this.status === 'item'">
       <div class="item_back item_container_style">
         <div class="item_list_container">
-          <ul class="" @click="chooseItem">
+          <ul class="">
             <li
               v-for="(item, index) in itemDetail[itemNum - 1].topic_answer"
               :key="index"
+              :data-index="index"
               class="item_list tet_left"
+              @click="chooseItem(item.topic_answer_id, index)"
             >
-              <span class="option_style">{{ changeIndex(index) }}</span>
+              <span class="option_style" :class="{'has_choosed': choosedNum === index }">{{ changeIndex(index) }}</span>
               <span class="option_detail">{{ item.answer_name }}</span>
             </li>
           </ul>
         </div>
       </div>
-      <span v-if="itemNum < itemDetail.length" class="next_item button_style">
+      <span v-if="itemNum < itemDetail.length" @click="nextItem" class="next_item button_style">
       </span>
       <span
         v-if="itemNum === itemDetail.length"
@@ -50,8 +52,15 @@ export default {
       default: "home"
     }
   },
+  data() {
+    return {
+      itemId: null, //题目ID
+			choosedNum: null, //选中答案索引
+			choosedId:null //选中答案id
+    }
+  },
   methods: {
-    ...mapActions(["init"]),
+    ...mapActions(["init", "saveItem"]),
     changeIndex(index) {
       let obj = {
         "0": "A",
@@ -60,6 +69,20 @@ export default {
         "3": "D"
       };
       return obj[index];
+    },
+    chooseItem(id, index) {
+      this.choosedNum = index;
+      this.choosedId = id;
+    },
+    nextItem() {
+      if (this.choosedNum !== null) {
+        this.choosedNum = null;
+
+        //记录答案，跳转下一题
+        this.saveItem(this.choosedId);
+      } else {
+        alert('请您选择答案!');
+      }
     }
   },
   computed: {
@@ -170,6 +193,11 @@ export default {
     left: 50%;
     margin-left: -2.4rem;
     background-repeat: no-repeat;
+  }
+  .has_choosed{
+    background-color: #ffd400;
+    color: #575757;
+    border-color: #ffd400;
   }
 }
 </style>

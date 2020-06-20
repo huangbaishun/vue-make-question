@@ -21,16 +21,25 @@
               class="item_list tet_left"
               @click="chooseItem(item.topic_answer_id, index)"
             >
-              <span class="option_style" :class="{'has_choosed': choosedNum === index }">{{ changeIndex(index) }}</span>
+              <span
+                class="option_style"
+                :class="{ has_choosed: choosedNum === index }"
+                >{{ changeIndex(index) }}</span
+              >
               <span class="option_detail">{{ item.answer_name }}</span>
             </li>
           </ul>
         </div>
       </div>
-      <span v-if="itemNum < itemDetail.length" @click="nextItem" class="next_item button_style">
+      <span
+        v-if="itemNum < itemDetail.length"
+        @click="nextItem"
+        class="next_item button_style"
+      >
       </span>
       <span
         v-if="itemNum === itemDetail.length"
+        @click="endScore"
         class="submit_item button_style"
       >
       </span>
@@ -55,9 +64,9 @@ export default {
   data() {
     return {
       itemId: null, //题目ID
-			choosedNum: null, //选中答案索引
-			choosedId:null //选中答案id
-    }
+      choosedNum: null, //选中答案索引
+      choosedId: null //选中答案id
+    };
   },
   methods: {
     ...mapActions(["init", "saveItem"]),
@@ -81,8 +90,11 @@ export default {
         //记录答案，跳转下一题
         this.saveItem(this.choosedId);
       } else {
-        alert('请您选择答案!');
+        alert("请您选择答案!");
       }
+    },
+    endScore() {
+      this.$router.push("/endPage");
     }
   },
   computed: {
@@ -194,7 +206,7 @@ export default {
     margin-left: -2.4rem;
     background-repeat: no-repeat;
   }
-  .has_choosed{
+  .has_choosed {
     background-color: #ffd400;
     color: #575757;
     border-color: #ffd400;

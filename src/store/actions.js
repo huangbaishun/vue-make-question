@@ -5,7 +5,7 @@ const Actions = {
   },
   //保持当前题目，跳转下一题
   saveItem({ commit, state }, uid) {
-    commit('REMBER_ANSWER', uid); // 记录ID
+    commit("REMBER_ANSWER", uid); // 记录ID
 
     if (state.itemNum < state.itemDetail.length) {
       commit("addItemNum", 1);

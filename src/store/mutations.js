@@ -8,9 +8,9 @@ const mutations = {
     state.answerid = [];
   },
   [REMBER_ANSWER](state, uid) {
-    state.answerid.push(uid)
+    state.answerid.push(uid);
   },
-  [addItemNum](state,num) {
+  [addItemNum](state, num) {
     state.itemNum += num;
   }
 };
